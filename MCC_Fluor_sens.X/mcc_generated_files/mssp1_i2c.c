@@ -207,8 +207,8 @@ void MSSP1_I2C_Initialize(void)
     SSP1STAT = 0x0080;
     // SSPEN enabled; WCOL no_collision; CKP Clock Stretch; SSPM FOSC/(2 * (BRG_Value_I2C + 1)); SSPOV no_overflow; 
     SSP1CON1 = 0x0028;
-    // SBCDE disabled; BOEN disabled; SCIE disabled; PCIE disabled; DHEN disabled; SDAHT 100ns; AHEN disabled; 
-    SSP1CON3 = 0x0000;
+    // SBCDE disabled; BOEN disabled; SCIE disabled; PCIE disabled; DHEN disabled; SDAHT 300ns; AHEN disabled; 
+    SSP1CON3 = 0x0008;
     // Baud Rate Generator Value: SSPADD 159;   
     // Calculated Frequency: 50000 Hz; 
     SSP1ADD = 0x009F;
@@ -729,7 +729,7 @@ bool MSSP1_I2C_MasterQueueIsEmpty(void)
 bool MSSP1_I2C_MasterQueueIsFull(void)
 {
     return(mssp1_i2c_object.trStatus.s.full);
-}        
+}             
 
 
         

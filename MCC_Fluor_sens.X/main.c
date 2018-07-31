@@ -44,6 +44,10 @@
 
 #include "mcc_generated_files/mcc.h"
 #include "custom.h"
+#include "libpic30.h"
+#include "LEDboard.h"
+#include "Potentiometer.h"
+
 /*
                          Main application
  */
@@ -51,34 +55,61 @@ int main(void)
 {
     // initialize the device
     SYSTEM_Initialize();
-
+    
+    SYSTEM_Configuration();
+    
+        
+    LEDSTRIPE_STATUS ledstripeStatus;
+    
+    if( !LEDSTRIPE_Configure(&ledstripeStatus) ){
+        UART1_Write(ledstripeStatus);
+    }
+    UART1_Write(ledstripeStatus);
+    
+//    POTENTIOMETER_STATUS potentiometerStatus;
+//    
+//    __delay_ms(1000);
+//    
+//    if( !POTENTIOMETER_Configure(&potentiometerStatus) )
+//        UART1_Write(MSSP1_I2C_ErrorCountGet());
+// 
+//    UART1_Write(ledstripeStatus);
+    
     while (1)
     {
-        if( TMR1_GetElapsedThenClear() ){
-            // Send or store acq value
-        }
+        
+        UART1_Write(ledstripeStatus);
+        __delay_ms(1000);
+        
+//        LEDSTRIPE_RIGTH_RED;
+//        __delay_ms(1000);
+        /*
+        LEDSTRIPE_RIGTH_RED;
+        __delay_ms(1000);
+        LEDSTRIPE_RIGTH_GREEN;
+        __delay_ms(1000);
+        LEDSTRIPE_RIGTH_BLUE;
+        __delay_ms(1000);
+        LEDSTRIPE_CENTER_RED;
+        __delay_ms(1000);
+        LEDSTRIPE_CENTER_GREEN;
+        __delay_ms(1000);
+        LEDSTRIPE_CENTER_BLUE;
+        __delay_ms(1000);
+        LEDSTRIPE_LEFT_GREEN;
+        __delay_ms(1000);
+        LEDSTRIPE_LEFT_BLUE;
+        __delay_ms(1000);
+        */
+        //LEDSTRIPE_ON;
+        //while(1);       
+        
     }
 
+    
     return -1;
 }
  
-
-
-void Acquire(void){
-    
-    int acq;
-    
-    ADC1_Enable(); // Enable ADC
-    LED_EN_SetHigh(); // Turn on LED
-    ADC1_Start();   // Start acquisition
-    
-    while( ! ADC1_IsSampleReady() ); //wait
-    acq = ADC1_SampleGet();
-    
-    ADC1_Stop();
-    ADC1_Disable();
-    
-}
 /**
  End of File
 */
