@@ -119,7 +119,6 @@ typedef enum
     status value.  To test a value of this type, the bit of interest must be
     AND'ed with value and checked to see if the result is non-zero.
 */
-
 typedef enum
 {
     /* Indicates that the core driver buffer is full */
@@ -186,12 +185,7 @@ typedef enum
     </code>
 
 */
-
 void UART1_Initialize(void);
-
-
-
-
 
 
 /**
@@ -230,7 +224,6 @@ void UART1_Initialize(void);
     } while( numBytes < MY_BUFFER_SIZE);
     </code>
 */
-
 uint8_t UART1_Read( void);
 
 
@@ -290,7 +283,6 @@ uint8_t UART1_Read( void);
     }
     </code>
 */
-
 unsigned int UART1_ReadBuffer( uint8_t *buffer ,  const unsigned int numbytes);
 
 
@@ -331,7 +323,6 @@ unsigned int UART1_ReadBuffer( uint8_t *buffer ,  const unsigned int numbytes);
     }
     </code>
 */
-
 void UART1_Write( const uint8_t byte);
 
 
@@ -381,9 +372,7 @@ void UART1_Write( const uint8_t byte);
     }
     </code>
 */
-
 unsigned int UART1_WriteBuffer( const uint8_t *buffer , const unsigned int numbytes );
-
 
 
 /**
@@ -413,10 +402,7 @@ unsigned int UART1_WriteBuffer( const uint8_t *buffer , const unsigned int numby
     Refer to UART1_ReadBuffer and UART1_WriteBuffer for example
 
 */
-
 UART1_TRANSFER_STATUS UART1_TransferStatusGet (void );
-
-
 
 
 /**
@@ -618,7 +604,6 @@ bool UART1_TransmitBufferIsFull (void);
         }
     </code>
 */
-
 UART1_STATUS UART1_StatusGet (void );
 
 

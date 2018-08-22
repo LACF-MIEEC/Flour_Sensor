@@ -210,7 +210,6 @@ void UART2_Write(uint8_t txData);
         }
     </code>
 */
-
 UART2_STATUS UART2_StatusGet (void );
 
 #ifdef __cplusplus  // Provide C++ Compatibility
