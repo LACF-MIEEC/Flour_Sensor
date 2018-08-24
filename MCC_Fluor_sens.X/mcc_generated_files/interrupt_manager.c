@@ -67,9 +67,9 @@ void INTERRUPT_Initialize (void)
     //    SSPI: MSSP1 - I2C/SPI Interrupt
     //    Priority: 6
         IPC4bits.SSP1IP = 6;
-    //    ADI: ADC1 - A/D Converter 1
+    //    TI: T1 - Timer1
     //    Priority: 7
-        IPC3bits.AD1IP = 7;
+        IPC0bits.T1IP = 7;
     //    UERI: U1E - UART1 Error
     //    Priority: 1
         IPC16bits.U1ERIP = 1;
@@ -79,8 +79,8 @@ void INTERRUPT_Initialize (void)
     //    URXI: U1RX - UART1 Receiver
     //    Priority: 6
         IPC2bits.U1RXIP = 6;
-    //    TI: T1 - Timer1
+    //    ADI: ADC1 - A/D Converter 1
     //    Priority: 7
-        IPC0bits.T1IP = 7;
+        IPC3bits.AD1IP = 7;
 
 }

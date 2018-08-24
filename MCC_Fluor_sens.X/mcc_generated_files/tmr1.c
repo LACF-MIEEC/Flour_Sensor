@@ -49,7 +49,7 @@
 
 #include <xc.h>
 #include "tmr1.h"
-
+#include "adc1.h"
 /**
   Section: Data Type Definitions
 */
@@ -106,8 +106,6 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _T1Interrupt (  )
 {
     /* Check if the Timer Interrupt/Status is set */
 
-    //***User Area Begin
-
     // ticker function call;
     // ticker is 1 -> Callback function gets called everytime this ISR executes
     TMR1_CallBack();
@@ -147,9 +145,9 @@ uint16_t TMR1_Counter16BitGet( void )
 }
 
 
-void __attribute__ ((weak,alias("Acquire"))) TMR1_CallBack(void)
+void __attribute__ ((weak, alias("Acquire"))) TMR1_CallBack(void)
 {
-    // Add your custom callback code here
+    
 }
 
 void TMR1_Start( void )

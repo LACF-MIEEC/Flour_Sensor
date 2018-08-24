@@ -17,7 +17,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-//#include "LEDboard.h"
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -26,37 +25,37 @@
 #endif
 
 /**
-  Section: Macro Definition
+  Section: Functions Declarations
 */
-                
-#define COMMAND_LENGTH 2
+        
 /**
-  Section: Data Types
-*/
-
-/** USB Commands
-
   @Summary
+    
 
   @Description
-
-*/
-typedef enum
-{
-    INPUT_CHANGE = 0xA,
     
-    MODE_CHANGE = 0xB
 
-} USB_COMMAND_TYPE;
+  @Preconditions
+    
+ 
+  @Param
+    
 
+  @Returns
+    
 
+  @Comment
+    
+ 
+  @Example
+    <code>
+        
+    </code>
 
-static uint8_t USB_Command[COMMAND_LENGTH];
-static uint8_t BLUETOOTH_Command[COMMAND_LENGTH];
-
-/**
-  Section: Interface Routines
-*/
+  @Remarks
+    
+ */
+void SampleChamber(void);
 
 /**
   @Summary
@@ -85,123 +84,8 @@ static uint8_t BLUETOOTH_Command[COMMAND_LENGTH];
   @Remarks
     
  */
-//bool USB_GetCommand(void);
+void Acquire(void);
 
-/**
-  @Summary
-    
-
-  @Description
-    
-
-  @Preconditions
-    
- 
-  @Param
-    
-
-  @Returns
-    
-
-  @Comment
-    
- 
-  @Example
-    <code>
-        
-    </code>
-
-  @Remarks
-    
- */
-//bool BLUETOOTH_GetCommand(void);
-
-/**
-  @Summary
-    
-
-  @Description
-    
-
-  @Preconditions
-    
- 
-  @Param
-    
-
-  @Returns
-    
-
-  @Comment
-    
- 
-  @Example
-    <code>
-        
-    </code>
-
-  @Remarks
-    
- */
-void ADC_Aquire(void);
-
-/**
-  @Summary
-    
-
-  @Description
-    
-
-  @Preconditions
-    
- 
-  @Param
-    
-
-  @Returns
-    
-
-  @Comment
-    
- 
-  @Example
-    <code>
-        
-    </code>
-
-  @Remarks
-    
- */
-void POTENTIOMETER_Calibrate(void);
-
-/**
-  @Summary
-    
-
-  @Description
-    
-
-  @Preconditions
-    
- 
-  @Param
-    
-
-  @Returns
-    
-
-  @Comment
-    
- 
-  @Example
-    <code>
-        
-    </code>
-
-  @Remarks
-    
- */
-bool SYSTEM_Configuration(void);
 
 #ifdef	__cplusplus
 }

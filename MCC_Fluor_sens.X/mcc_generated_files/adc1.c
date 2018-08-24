@@ -185,7 +185,7 @@ void ADC1_ChannelSelect( ADC1_CHANNEL channel )
 
 void __attribute__ ( ( __interrupt__ , auto_psv ) ) _ADC1Interrupt ( void )
 {
-    if(!adc1_obj.sampleReady){
+    if(!adc1_obj.sampleReady){ //No overwrite (must clear flag before a new acquisition)
         uint16_t ADC_Buffer[adc1_obj.intSample];
 
         ADC1_ConversionResultBufferGet(ADC_Buffer);
@@ -200,6 +200,8 @@ void __attribute__ ( ( __interrupt__ , auto_psv ) ) _ADC1Interrupt ( void )
         adc1_obj.avgSample = sum / ((uint16_t)adc1_obj.intSample + 1);
 
         adc1_obj.sampleReady = true;
+        
+        ADC1_Stop(); // Acquisition Finished
     }
     // clear the ADC interrupt flag
     IFS0bits.AD1IF = false;

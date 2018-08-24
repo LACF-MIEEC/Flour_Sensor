@@ -12,75 +12,125 @@
   @Description
     
 */
-#include "custom.h"
 #include "mcc_generated_files/mcc.h"
 #include "Potentiometer.h"
-#include "libpic30.h"
+#include "i2c.h"
+#include "custom.h"
 
 /**
-  Section: Macro Definitions
+  Section: Local Variables
  */
-#define POTENTIOMETER_I2C_TIMEOUT 1000
-#define POTENTIOMETER_I2C_RETRY_TIMEOUT 100
+static I2C_SLAVE i2c_potentiometer;
 
-bool POTENTIOMETER_Configure(POTENTIOMETER_STATUS *potentiometerStatus){
+/**
+  Section: Potentiometer Interface
+*/
+
+bool POTENTIOMETER_Configure(I2C_STATUS *status){
     
-    MSSP1_I2C_MESSAGE_STATUS status = MSSP1_I2C_MESSAGE_PENDING;
+    i2c_potentiometer.address = POTENTIOMETER_ADDRESS;
+    i2c_potentiometer.timeout = POTENTIOMETER_CONNECTION_TIMEOUT;
+    i2c_potentiometer.max_retry = POTENTIOMETER_CONNECTION_MAX_RETRY;
     
-    uint16_t slaveTimeOut, timeOut;
 
     uint8_t WriteBuffer[2] = {0x00,
         0x00};
+    uint8_t bitMask = 0x80;
+    uint16_t offset;
+    
+    if(!POTENTIOMENTER_StepOffsetGet(&offset, status))
+        return false;
 
+    offset /= 2;
+    
+    ADC1_Enable(); // Enable ADC
 
-    MSSP1_I2C_MasterWrite(WriteBuffer,
-            2,
-            POTENTIOMETER_ADDRESS,
-            &status);
+    for (int i = 0; i < 8; i++) {
 
-    timeOut = 0;
-    slaveTimeOut = 0;
+        WriteBuffer[1] |= bitMask; // set bit to 1
 
-    while (status != MSSP1_I2C_MESSAGE_FAIL) {
-        // now send the transactions
-
-        // wait for the message to be sent or status has changed.
-        while (status == MSSP1_I2C_MESSAGE_PENDING) {
-            // add some delay here
-            __delay_ms(1);
-            // timeout checking
-            // check for max retry
-            if (slaveTimeOut == POTENTIOMETER_I2C_TIMEOUT){
-                *potentiometerStatus = POTENTIOMETER_SLAVE_TIMEOUT;
-                return false;
-            }
-            else
-                slaveTimeOut++;
-        }
-
-        if (status == MSSP1_I2C_MESSAGE_COMPLETE)
-            break;//this needs to change
-        
-        __delay_ms(1);
-        
-        // check for max retry
-        if (timeOut == POTENTIOMETER_I2C_RETRY_TIMEOUT){
-            
-            if(status == MSSP1_I2C_MESSAGE_ADDRESS_NO_ACK)
-                *potentiometerStatus = POTENTIOMETER_RETRY_TIMEOUT_ADDRESS;
-            else if(status == MSSP1_I2C_DATA_NO_ACK)
-                *potentiometerStatus = POTENTIOMETER_RETRY_TIMEOUT_DATA;
+        if (!I2C_Send(WriteBuffer, 2, i2c_potentiometer, status))
             return false;
+
+        else if (*status == I2C_COMPLETE) {
+
+            LED_EN_SetHigh(); // Turn on LED
+            ADC1_Start(); // Start acquisition
+
+            while (!ADC1_IsSampleReady()); //wait for acquisition
+
+            LED_EN_SetLow(); // Turn off LED
+
+            if (ADC1_SampleGet() > AMPLIFIER_OUTPUT_REFERENCE_VALUE) {
+                if (ADC1_SampleGet() - AMPLIFIER_OUTPUT_REFERENCE_VALUE <= offset)
+                    break;
+                
+                WriteBuffer[1] &= ~bitMask; //set bit to 0
+                
+                if (i == 7) { // Update before exit loop
+                    if (!I2C_Send(WriteBuffer, 2, i2c_potentiometer, status))
+                        return false;
+                    else if (*status != I2C_COMPLETE)
+                        return false;
+                }
+                
+            } else if (ADC1_SampleGet() < AMPLIFIER_OUTPUT_REFERENCE_VALUE) {
+                if (AMPLIFIER_OUTPUT_REFERENCE_VALUE - ADC1_SampleGet() <= offset)
+                    break;
+                
+            } else
+                break;
+
+            bitMask >>= 1; // Moves to next bit
+        } else
+            return false;
+    }
+
+    ADC1_Disable(); // Disable ADC
+    return true;
+
+}
+
+bool POTENTIOMENTER_StepOffsetGet(uint16_t *step, I2C_STATUS *status){
+    
+        uint8_t WriteBuffer[2] = {0x00,
+        0x80};
+        
+        uint16_t temp;
+        
+        if (!I2C_Send(WriteBuffer, 2, i2c_potentiometer, status))
+            return false;
+
+        else if (*status == I2C_COMPLETE) {
+            
+            LED_EN_SetHigh(); // Turn on LED
+            ADC1_Start(); // Start acquisition
+
+            while (!ADC1_IsSampleReady()); //wait for acquisition
+
+            LED_EN_SetLow(); // Turn off LED
+            
+            temp = ADC1_SampleGet();
         }
         else
-            timeOut++;
+            return false;
+        
+        WriteBuffer[1] += 0x01;
+        
+        if (!I2C_Send(WriteBuffer, 2, i2c_potentiometer, status))
+            return false;
 
-    }
-    if(status == MSSP1_I2C_MESSAGE_FAIL){
-        *potentiometerStatus = POTENTIOMETER_FAIL;
-        return false;
-    }
-    
-    return true;
-    
+        else if (*status == I2C_COMPLETE) {
+            
+            LED_EN_SetHigh(); // Turn on LED
+            ADC1_Start(); // Start acquisition
+
+            while (!ADC1_IsSampleReady()); //wait for acquisition
+
+            LED_EN_SetLow(); // Turn off LED
+            
+            *step = ADC1_SampleGet() - temp;
+        }
+        else
+            return false;      
 }

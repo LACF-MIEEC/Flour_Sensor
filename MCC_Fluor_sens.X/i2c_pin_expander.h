@@ -5,8 +5,8 @@
  * Created on July 23, 2018, 6:38 PM
  */
 
-#ifndef LEDBOARD_H
-#define	LEDBOARD_H
+#ifndef I2C_PIN_EXPANDER_H
+#define	I2C_PIN_EXPANDER_H
 
 
 /**
@@ -21,6 +21,8 @@
 /**
  Section: Macro Definition
 */
+
+
 
 #define OFF 0x00
 
@@ -77,17 +79,47 @@
 extern "C" {
 #endif
 
-typedef enum{
-    LEDSTRIPE_SLAVE_TIMEOUT = 0xA1,
-    LEDSTRIPE_RETRY_TIMEOUT_ADDRESS = 0xA2,
-    LEDSTRIPE_RETRY_TIMEOUT_DATA = 0xA3,
-    LEDSTRIPE_FAIL = 0xA4,
-    LEDSTRIPE_OK = 0x00
-}LEDSTRIPE_STATUS;
-    
+/**
+ Section: Global Variables
+*/
+bool I2C_PinExpander_Enabled = true;
+
+I2C_STATUS I2C_PIN_EXPANDER_STATUS;
+
 /**
  Section: Functions
 */
+
+
+/**
+  @Summary
+    
+
+  @Description
+    
+
+  @Preconditions
+    
+ 
+  @Param
+    
+
+  @Returns
+    
+
+  @Comment
+    
+ 
+  @Example
+    <code>
+        
+    </code>
+
+  @Remarks
+    
+ */
+bool BarGraphDisplay(uint16_t value, I2C_STATUS *status);
+
 
 /**
   @Summary
@@ -181,5 +213,5 @@ bool LEDSTRIPE_GetOutput(uint8_t *outputReg);
 }
 #endif
 
-#endif	/* LEDBOARD_H */
+#endif	/* I2C_PIN_EXPANDER_H */
 

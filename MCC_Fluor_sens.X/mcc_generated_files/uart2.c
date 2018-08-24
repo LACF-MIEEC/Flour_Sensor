@@ -149,6 +149,8 @@ void UART2_Initialize (void)
    uart2_obj.txStatus.s.empty = true;
    uart2_obj.txStatus.s.full = false;
    uart2_obj.rxStatus.s.full = false;
+   
+   U2MODEbits.UARTEN = 0;  // disable Bluetooth
 }
 
 

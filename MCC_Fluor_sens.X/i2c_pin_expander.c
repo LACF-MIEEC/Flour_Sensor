@@ -20,7 +20,7 @@
 #define LEDSTRIPE_I2C_RETRY_TIMEOUT 500
 
 
-#include "LEDboard.h"
+#include "i2c_pin_expander.h"
 #include "mcc_generated_files/mcc.h"
 #include "libpic30.h"
 
