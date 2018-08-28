@@ -79,7 +79,6 @@
     driver or a recovery can be performed to resend the transaction.
 
  */
-
 typedef enum
 {
     MSSP1_I2C_MESSAGE_FAIL,
@@ -115,11 +114,10 @@ typedef struct
     uint8_t   *pbuffer;         // a pointer to a buffer of length bytes
 } MSSP1_I2C_TRANSACTION_REQUEST_BLOCK;
 
-
-
 /**
   Section: Interface Routines
 */
+
 /**
   @Summary
     Initializes the MSSP instance : 1
@@ -231,8 +229,7 @@ typedef struct
 
     </code>
 
-*/
-        
+*/       
 void MSSP1_I2C_Initialize(void);
 
 
@@ -273,7 +270,6 @@ void MSSP1_I2C_Initialize(void);
         </code>
 
 */
-
 void MSSP1_I2C_MasterWrite(
                                 uint8_t *pdata,
                                 uint8_t length,
@@ -447,7 +443,6 @@ void MSSP1_I2C_MasterWrite(
         </code>
 
 */
-
 void MSSP1_I2C_MasterRead(
                                 uint8_t *pdata,
                                 uint8_t length,
@@ -570,7 +565,6 @@ void MSSP1_I2C_MasterRead(
         </code>
 
 */
-
 void MSSP1_I2C_MasterTRBInsert(
                                 uint8_t count,
                                 MSSP1_I2C_TRANSACTION_REQUEST_BLOCK *ptrb_list,
@@ -615,7 +609,6 @@ void MSSP1_I2C_MasterTRBInsert(
         </code>
 
 */
-
 void MSSP1_I2C_MasterReadTRBBuild(
                                 MSSP1_I2C_TRANSACTION_REQUEST_BLOCK *ptrb,
                                 uint8_t *pdata,
@@ -661,7 +654,6 @@ void MSSP1_I2C_MasterReadTRBBuild(
         </code>
 
 */
-
 void MSSP1_I2C_MasterWriteTRBBuild(
                                 MSSP1_I2C_TRANSACTION_REQUEST_BLOCK *ptrb,
                                 uint8_t *pdata,
@@ -704,7 +696,6 @@ void MSSP1_I2C_MasterWriteTRBBuild(
         </code>
 
 */
-
 bool MSSP1_I2C_MasterQueueIsEmpty(void);
 
 
@@ -743,7 +734,6 @@ bool MSSP1_I2C_MasterQueueIsEmpty(void);
         </code>
 
 */
-
 bool MSSP1_I2C_MasterQueueIsFull(void);
 
 uint8_t MSSP1_I2C_ErrorCountGet(void);

@@ -618,7 +618,6 @@ bool UART2_TransmitBufferIsFull (void);
         }
     </code>
 */
-
 UART2_STATUS UART2_StatusGet (void );
 
 

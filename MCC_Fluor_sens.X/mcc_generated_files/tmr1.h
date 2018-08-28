@@ -126,7 +126,6 @@ void TMR1_Initialize (void);
   @Example 
     Refer to the example of TMR1_Initialize();
 */
-
 void TMR1_Period16BitSet( uint16_t value );
 
 /**
@@ -146,7 +145,6 @@ void TMR1_Period16BitSet( uint16_t value );
   @Example 
     Refer to the example of TMR1_Initialize();
 */
-
 uint16_t TMR1_Period16BitGet( void );
 
 /**
@@ -178,7 +176,6 @@ uint16_t TMR1_Period16BitGet( void );
     }
     </code>
 */
-
 void TMR1_Counter16BitSet ( uint16_t value );
 
 /**
@@ -197,7 +194,6 @@ void TMR1_Counter16BitSet ( uint16_t value );
   @Example 
     Refer to the example of TMR1_Counter16BitSet();
 */
-
 uint16_t TMR1_Counter16BitGet( void );
 
 /**
@@ -234,7 +230,6 @@ void TMR1_CallBack(void);
   @Example 
     Refer to the example of TMR1_Initialize();
 */
-
 void TMR1_Start( void );
 
 /**
@@ -253,7 +248,6 @@ void TMR1_Start( void );
   @Example 
     Refer to the example of TMR1_Initialize();
 */
-
 void TMR1_Stop( void );
 
 /**
@@ -274,7 +268,6 @@ void TMR1_Stop( void );
   @Example 
     Refer to the example of TMR1_Initialize();
 */
-
 bool TMR1_GetElapsedThenClear(void);
 
 /**
@@ -293,7 +286,6 @@ bool TMR1_GetElapsedThenClear(void);
   @Example 
     Refer to the example of TMR1_Initialize();
 */
-
 int TMR1_SoftwareCounterGet(void);
 
 /**
@@ -312,7 +304,6 @@ int TMR1_SoftwareCounterGet(void);
   @Example 
     Refer to the example of TMR1_Initialize();
 */
-
 void TMR1_SoftwareCounterClear(void);
 
 #ifdef __cplusplus  // Provide C++ Compatibility
