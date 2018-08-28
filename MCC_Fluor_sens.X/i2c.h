@@ -79,7 +79,7 @@ typedef enum
 
     <p><b>Remarks:</b></p>
  */
-bool I2C_Write(uint8_t *wdata, uint8_t length, I2C_SLAVE *slave, I2C_STATUS *send_status);
+bool I2C_Send(uint8_t *wdata, uint8_t length, I2C_SLAVE *slave, I2C_STATUS *send_status);
 
 /**
     <p><b>Function prototype:</b></p>
@@ -101,7 +101,7 @@ bool I2C_Write(uint8_t *wdata, uint8_t length, I2C_SLAVE *slave, I2C_STATUS *sen
 
     <p><b>Remarks:</b></p>
  */
-bool I2C_Read(uint8_t *rbuffer, uint8_t length, I2C_SLAVE *slave, I2C_STATUS *read_status);
+bool I2C_Read(uint8_t *pData, uint8_t nCount, uint8_t regAddress, I2C_SLAVE *slave, I2C_STATUS *read_status);
 
 /**
     <p><b>Function prototype:</b></p>

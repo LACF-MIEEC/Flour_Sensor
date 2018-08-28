@@ -14,19 +14,21 @@
 */
 #include "mcc_generated_files/mcc.h"
 #include "Potentiometer.h"
-#include "i2c.h"
-#include "custom.h"
 
 /**
   Section: Local Variables
  */
 static I2C_SLAVE i2c_potentiometer;
+I2C_STATUS I2C_POTENTIOMETER_STATUS;
+
+#define POTENTIOMETER_CONNECTION_TIMEOUT 100
+#define POTENTIOMETER_CONNECTION_MAX_RETRY 50
 
 /**
   Section: Potentiometer Interface
 */
 
-bool POTENTIOMETER_Configure(I2C_STATUS *status){
+bool POTENTIOMETER_Configure(){
     
     i2c_potentiometer.address = POTENTIOMETER_ADDRESS;
     i2c_potentiometer.timeout = POTENTIOMETER_CONNECTION_TIMEOUT;
@@ -38,21 +40,22 @@ bool POTENTIOMETER_Configure(I2C_STATUS *status){
     uint8_t bitMask = 0x80;
     uint16_t offset;
     
-    if(!POTENTIOMENTER_StepOffsetGet(&offset, status))
+    if(!POTENTIOMENTER_StepOffsetGet(&offset, &I2C_POTENTIOMETER_STATUS))
         return false;
 
     offset /= 2;
     
     ADC1_Enable(); // Enable ADC
-
-    for (int i = 0; i < 8; i++) {
+    uint8_t i;
+    
+    for (i = 0; i < 8; i++) {
 
         WriteBuffer[1] |= bitMask; // set bit to 1
 
-        if (!I2C_Send(WriteBuffer, 2, i2c_potentiometer, status))
+        if (!I2C_Send(WriteBuffer, 2, &i2c_potentiometer, &I2C_POTENTIOMETER_STATUS))
             return false;
 
-        else if (*status == I2C_COMPLETE) {
+        else if (I2C_POTENTIOMETER_STATUS == I2C_COMPLETE) {
 
             LED_EN_SetHigh(); // Turn on LED
             ADC1_Start(); // Start acquisition
@@ -68,9 +71,9 @@ bool POTENTIOMETER_Configure(I2C_STATUS *status){
                 WriteBuffer[1] &= ~bitMask; //set bit to 0
                 
                 if (i == 7) { // Update before exit loop
-                    if (!I2C_Send(WriteBuffer, 2, i2c_potentiometer, status))
+                    if (!I2C_Send(WriteBuffer, 2, &i2c_potentiometer, &I2C_POTENTIOMETER_STATUS))
                         return false;
-                    else if (*status != I2C_COMPLETE)
+                    else if (I2C_POTENTIOMETER_STATUS != I2C_COMPLETE)
                         return false;
                 }
                 
@@ -98,11 +101,11 @@ bool POTENTIOMENTER_StepOffsetGet(uint16_t *step, I2C_STATUS *status){
         
         uint16_t temp;
         
-        if (!I2C_Send(WriteBuffer, 2, i2c_potentiometer, status))
+        if (!I2C_Send(WriteBuffer, 2, &i2c_potentiometer, status))
             return false;
 
         else if (*status == I2C_COMPLETE) {
-            
+            ADC1_Enable(); // Enable ADC
             LED_EN_SetHigh(); // Turn on LED
             ADC1_Start(); // Start acquisition
 
@@ -111,17 +114,18 @@ bool POTENTIOMENTER_StepOffsetGet(uint16_t *step, I2C_STATUS *status){
             LED_EN_SetLow(); // Turn off LED
             
             temp = ADC1_SampleGet();
+            ADC1_Disable(); // Enable ADC
         }
         else
             return false;
         
         WriteBuffer[1] += 0x01;
         
-        if (!I2C_Send(WriteBuffer, 2, i2c_potentiometer, status))
+        if (!I2C_Send(WriteBuffer, 2, &i2c_potentiometer, status))
             return false;
 
         else if (*status == I2C_COMPLETE) {
-            
+            ADC1_Enable(); // Enable ADC
             LED_EN_SetHigh(); // Turn on LED
             ADC1_Start(); // Start acquisition
 
@@ -130,7 +134,14 @@ bool POTENTIOMENTER_StepOffsetGet(uint16_t *step, I2C_STATUS *status){
             LED_EN_SetLow(); // Turn off LED
             
             *step = ADC1_SampleGet() - temp;
+            ADC1_Disable(); // Enable ADC
         }
         else
             return false;      
+        
+        return true;
+}
+
+I2C_STATUS* POTENTIOMENTER_I2CstatusGet(void){
+    return &I2C_POTENTIOMETER_STATUS;
 }

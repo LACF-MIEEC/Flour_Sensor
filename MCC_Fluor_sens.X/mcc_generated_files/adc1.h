@@ -58,7 +58,9 @@
     extern "C" {
 
 #endif
-
+        
+#define AMPLIFIER_OUTPUT_REFERENCE_VALUE 1200 //(1V2 for ADC1 PVCFG = 4*Vbg)
+#define AMPLIFIER_MAX_OUTPUT 4096 // Max reading value
 /**
   Section: Data Types
 */

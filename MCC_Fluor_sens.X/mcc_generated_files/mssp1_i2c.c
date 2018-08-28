@@ -209,9 +209,9 @@ void MSSP1_I2C_Initialize(void)
     SSP1CON1 = 0x0028;
     // SBCDE disabled; BOEN disabled; SCIE disabled; PCIE disabled; DHEN disabled; SDAHT 100ns; AHEN disabled; 
     SSP1CON3 = 0x0000;
-    // Baud Rate Generator Value: SSPADD 19;   
-    // Calculated Frequency: 400000 Hz; 
-    SSP1ADD = 0x0013;
+    // Baud Rate Generator Value: SSPADD 31;   
+    // Calculated Frequency: 250000 Hz; 
+    SSP1ADD = 0x001F;
 
     /* MSSP1 - I2C/SPI Interrupt */
     // clear the master interrupt flag

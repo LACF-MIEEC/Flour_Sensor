@@ -49,7 +49,6 @@
 
 #include <xc.h>
 #include "tmr1.h"
-#include "adc1.h"
 /**
   Section: Data Type Definitions
 */
@@ -87,8 +86,8 @@ void TMR1_Initialize (void)
 {
     //TMR1 0; 
     TMR1 = 0x0000;
-    //Period = 0.5 s; Frequency = 16000000 Hz; PR1 31250; 
-    PR1 = 0x7A12;
+    //Period = 0.01 s; Frequency = 16000000 Hz; PR1 625; 
+    PR1 = 0x0271;
     //TCKPS 1:256; TON disabled; TSIDL disabled; TCS FOSC/2; TECS SOSC; TSYNC disabled; TGATE disabled; 
     T1CON = 0x0030;
 
@@ -106,9 +105,22 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _T1Interrupt (  )
 {
     /* Check if the Timer Interrupt/Status is set */
 
-    // ticker function call;
-    // ticker is 1 -> Callback function gets called everytime this ISR executes
+    //***User Area Begin
+    static volatile unsigned int CountCallBack = 0;
+    
+    // check pin expander for inputs
+    
+    
+
+    // callback function - called every 50th pass
+    if (++CountCallBack >= TMR1_INTERRUPT_TICKER_FACTOR)
+    {
+        // ticker function call
     TMR1_CallBack();
+
+        // reset ticker counter
+        CountCallBack = 0;
+    }
 
     //***User Area End
 
@@ -145,7 +157,7 @@ uint16_t TMR1_Counter16BitGet( void )
 }
 
 
-void __attribute__ ((weak, alias("Acquire"))) TMR1_CallBack(void)
+void __attribute__ ((weak)) TMR1_CallBack(void)
 {
     
 }
