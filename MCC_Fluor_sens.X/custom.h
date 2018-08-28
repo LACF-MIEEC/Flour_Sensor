@@ -5,32 +5,61 @@
  * Revision history: 
  */
  
-#ifndef XC_HEADER_TEMPLATE_H
-#define	XC_HEADER_TEMPLATE_H
+#ifndef CUSTOM_H
+#define	CUSTOM_H
 
 /**
  Section: Included Files
 */
 
 #include <xc.h> // include processor files - each processor file is guarded.  
-#include <stdbool.h>
+#include <stdbool.h> 
 #include <stdint.h>
 #include <stdlib.h>
+
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 
     extern "C" {
 
 #endif
-    
+
+        
+extern bool AUTO_SAMPLING;
+extern bool AUTO_SAMPLING_STAND_BY;
+        
 /**
-  Section: Data Types
+  Section: Functions Declarations
 */
         
-
 /**
-  Section: Interface Routines
-*/
+  @Summary
+    
+
+  @Description
+    
+
+  @Preconditions
+    
+ 
+  @Param
+    
+
+  @Returns
+    
+
+  @Comment
+    
+ 
+  @Example
+    <code>
+        
+    </code>
+
+  @Remarks
+    
+ */
+void SampleChamber(void);
 
 /**
   @Summary
@@ -59,11 +88,69 @@
   @Remarks
     
  */
-void Aquire(void);
+void Acquire(void);
+
+/**
+  @Summary
+    
+
+  @Description
+    
+
+  @Preconditions
+    
+ 
+  @Param
+    
+
+  @Returns
+    
+
+  @Comment
+    
+ 
+  @Example
+    <code>
+        
+    </code>
+
+  @Remarks
+    
+ */
+void PlayWithLeds(void);
+
+/**
+  @Summary
+    
+
+  @Description
+    
+
+  @Preconditions
+    
+ 
+  @Param
+    
+
+  @Returns
+    
+
+  @Comment
+    
+ 
+  @Example
+    <code>
+        
+    </code>
+
+  @Remarks
+    
+ */
+void PlayWithButtons(void);
 
 #ifdef	__cplusplus
 }
 #endif /* __cplusplus */
 
-#endif	/* XC_HEADER_TEMPLATE_H */
+#endif	/* CUSTOM_H */
 

@@ -58,7 +58,9 @@
     extern "C" {
 
 #endif
-
+        
+#define AMPLIFIER_OUTPUT_REFERENCE_VALUE 1200 //(1V2 for ADC1 PVCFG = 4*Vbg)
+#define AMPLIFIER_MAX_OUTPUT 4096 // Max reading value
 /**
   Section: Data Types
 */
@@ -77,6 +79,7 @@
 typedef enum 
 {
     ADC1_ADC_IN =  0x0,
+    ADC1_BAT =  0x1,
     ADC1_CHANNEL_CTMU_TEMPERATURE_SENSOR_INPUT =  0x16,
     ADC1_CHANNEL_CTMU =  0x17,
     ADC1_CHANNEL_INTERNAL_BAND_GAP_REFERENCE =  0x1A,
@@ -84,7 +87,7 @@ typedef enum
     ADC1_CHANNEL_UPPER_GUARDBAND_RAIL =  0x1C,
     ADC1_CHANNEL_AVSS =  0x1D,
     ADC1_CHANNEL_AVDD =  0x1E,
-    ADC1_MAX_CHANNEL_COUNT = 8
+    ADC1_MAX_CHANNEL_COUNT = 9
 } ADC1_CHANNEL;
 
 /**

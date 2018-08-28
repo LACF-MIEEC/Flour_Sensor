@@ -14,7 +14,7 @@
   @Description:
     This source file provides implementations for MPLAB(c) Code Configurator interrupts.
     Generation Information :
-        Product Revision  :  MPLAB(c) Code Configurator - 4.45
+        Product Revision  :  MPLAB(c) Code Configurator - 4.45.7
         Device            :  PIC24FV16KM202
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.34

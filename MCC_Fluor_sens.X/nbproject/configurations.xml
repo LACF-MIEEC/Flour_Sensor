@@ -18,6 +18,10 @@
         <itemPath>mcc_generated_files/tmr1.h</itemPath>
       </logicalFolder>
       <itemPath>custom.h</itemPath>
+      <itemPath>Potentiometer.h</itemPath>
+      <itemPath>i2c.h</itemPath>
+      <itemPath>i2c_pin_extender.h</itemPath>
+      <itemPath>rgb.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -40,6 +44,11 @@
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
+      <itemPath>custom.c</itemPath>
+      <itemPath>Potentiometer.c</itemPath>
+      <itemPath>i2c.c</itemPath>
+      <itemPath>i2c_pin_extender.c</itemPath>
+      <itemPath>rgb.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -57,7 +66,7 @@
         <targetDevice>PIC24FV16KM202</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PKOBSKDEPlatformTool</platformTool>
+        <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>1.35</languageToolchainVersion>
         <platform>3</platform>
@@ -220,6 +229,8 @@
         <property key="UART 1" value="true"/>
         <property key="UART 2" value="true"/>
         <property key="ULPWU" value="true"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
@@ -254,6 +265,32 @@
         <property key="programoptions.uselvpprogramming" value="false"/>
         <property key="voltagevalue" value="5.0"/>
       </PICkit3PlatformTool>
+      <PKOBSKDEPlatformTool>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="firmware.download.all" value="false"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="0-2bff"/>
+        <property key="memories.userotp" value="true"/>
+        <property key="programoptions.donoteraseauxmem" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges" value=""/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges"
+                  value="${memories.eedata.default}"/>
+        <property key="programoptions.preserveprogram.ranges" value=""/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.usehighvoltageonmclr" value="false"/>
+        <property key="programoptions.uselvpprogramming" value="true"/>
+      </PKOBSKDEPlatformTool>
     </conf>
   </confs>
 </configurationDescriptor>

@@ -736,6 +736,7 @@ bool MSSP1_I2C_MasterQueueIsEmpty(void);
 */
 bool MSSP1_I2C_MasterQueueIsFull(void);
 
+uint8_t MSSP1_I2C_ErrorCountGet(void);
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 
